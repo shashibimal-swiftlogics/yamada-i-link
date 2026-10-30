@@ -1,1 +1,6 @@
-{"$schema":"https://openapi.vercel.sh/vercel.json","git":{"deploymentEnabled":false}}
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "outputDirectory": ".next",
+  "git": {"deploymentEnabled": {"*": false, "sample-ordering-g1-20261030": true}}
+}
