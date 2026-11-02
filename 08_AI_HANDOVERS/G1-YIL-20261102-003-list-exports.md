@@ -1,0 +1,11 @@
+# G1-YIL-20261102-003 — Product list and order exports
+
+User requested a list suited to 100+ products, order email, and MD/CSV/Excel downloads; selected automatic sending. The recipient was supplied in chat and must only be stored in private deployment configuration. User requested help setting up Resend; account/verified sender/credentials remain pending. No real email sent and no Supabase changes.
+
+Implemented compact accessible product table with 25-row pages, Unicode-normalized search, categories, and selected-only filter. Quantities live in parent state so pagination/filtering preserves selections. Receipt/history/HQ provide MD, BOM CSV and XLSX downloads. Native workbook has Japanese labels, numbers, cached formulas, frozen headers and formatting. Email endpoint uses fixed configured recipient, private sending code distinct from demo PIN, bounded JSON body, server-derived product prices, same-origin check, and Resend idempotency key. MD/CSV/XLSX attached automatically after confirmation when configured. Email failure preserves the order and permits retry. An accepted provider response is not claimed as inbox delivery.
+
+Verification: 12 Node tests pass: original order tests; CSV Japanese/escaping/formula handling; Markdown escaping; XLSX readback formulas and totals; deterministic XLSX bytes; provider payload/three attachments using mocked transport; disabled endpoint; unauthorized and invalid requests rejected. Live provider and actual delivery untested pending setup. See chat for subsequent build/browser/deployment results.
+
+Production build passed with / and /api/order-email. Browser checks passed: quantity 2 persisted across page 1 → 2 → 1 and selected-only filter; order confirmation; actual MD, CSV and XLSX downloads to the local Downloads folder. 820×1180 list screenshot inspected and saved as outputs/yamada-list-ipad.png. Generated order trace G1-YIL-eca0e7a2-55ed-4261-884a-2a78aac1fc22. Resend login opened, user action pending because sign-in accepts Terms. No credentials entered.
+
+Existing browser-local sample data, draft PR #1, and preview-only deployment scope retained. No production merge or protection setting change. Do not confuse the demo PIN or UI store filter with real authorization. Exact canonical Genesis ONE naming is still unavailable; this trace is provisional.

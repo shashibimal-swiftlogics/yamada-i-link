@@ -1,0 +1,15 @@
+'use client';
+import {useState} from 'react';
+import {products,categories} from '../../lib/catalog.mjs';
+const yen=n=>`¥${n.toLocaleString('ja-JP')}`;
+export default function CatalogList({cart,onQuantity}) {
+ const [query,setQuery]=useState(''),[category,setCategory]=useState('すべて'),[selectedOnly,setSelectedOnly]=useState(false),[page,setPage]=useState(1);
+ const filtered=products.filter(p=>(category==='すべて'||p.category===category)&&(!selectedOnly||cart[p.id])&&`${p.id} ${p.name}`.normalize('NFKC').toLowerCase().includes(query.normalize('NFKC').toLowerCase().trim()));
+ const pages=Math.max(1,Math.ceil(filtered.length/25)),current=Math.min(page,pages),visible=filtered.slice((current-1)*25,current*25);
+ return <><div className="heading"><div><div className="eyebrow">STORE ORDER / PRODUCT LIST</div><h1>商品一覧</h1><p>一覧から数量を入力して、まとめて発注。</p></div><span className="badge">全{products.length}商品 / 架空</span></div>
+ <div className="listTools"><input className="search" aria-label="商品検索" placeholder="商品名・商品コードで検索" value={query} onChange={e=>{setQuery(e.target.value);setPage(1)}}/><label className="checkLabel"><input type="checkbox" checked={selectedOnly} onChange={e=>{setSelectedOnly(e.target.checked);setPage(1)}}/>選択済みのみ</label></div>
+ <div className="chips">{['すべて',...categories].map(c=><button key={c} aria-pressed={category===c} className={category===c?'active':''} onClick={()=>{setCategory(c);setPage(1)}}>{c}</button>)}</div>
+ <p className="muted" aria-live="polite">{filtered.length}件 · {filtered.length?(current-1)*25+1:0}–{Math.min(current*25,filtered.length)}件を表示 · 価格はテスト用参考価格です</p>
+ <div className="productList" role="region" aria-label="商品一覧" tabIndex={0}><table><thead><tr><th scope="col">商品コード / 商品名</th><th scope="col" className="categoryColumn">分類</th><th scope="col">単価 / 単位</th><th scope="col">発注数量</th><th scope="col" className="subtotalColumn">小計</th></tr></thead><tbody>{visible.map(p=><tr key={p.id} className={cart[p.id]?'selectedRow':''}><td><small>{p.id}</small><strong>{p.name}</strong><span className="mobileCategory">{p.category}</span></td><td className="categoryColumn"><span className="badge">{p.category}</span></td><td><b>{yen(p.price)}</b><small>{p.unit}</small></td><td><div className="stepper"><button aria-label={`${p.name}を減らす`} disabled={!cart[p.id]} onClick={()=>onQuantity(p.id,(cart[p.id]||0)-1)}>−</button><input aria-label={`${p.name}の数量`} type="number" inputMode="numeric" min="0" max="99" value={cart[p.id]||0} onChange={e=>onQuantity(p.id,Number(e.target.value))}/><button aria-label={`${p.name}を増やす`} disabled={cart[p.id]>=99} onClick={()=>onQuantity(p.id,(cart[p.id]||0)+1)}>＋</button></div></td><td className="subtotalColumn">{cart[p.id]?yen(p.price*cart[p.id]):'—'}</td></tr>)}</tbody></table>{!filtered.length&&<p className="emptyList">該当する商品はありません。検索条件を変更してください。</p>}</div>
+ <div className="pagination"><button disabled={current<=1} onClick={()=>setPage(current-1)}>← 前の25件</button><span>{current} / {pages} ページ</span><button disabled={current>=pages} onClick={()=>setPage(current+1)}>次の25件 →</button></div></>
+}
