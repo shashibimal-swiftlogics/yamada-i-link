@@ -1,0 +1,20 @@
+/* Styles for v0.2 screens: role login, factory/logistics, admin master data, shop account page.
+   Keep touch targets at least 44px high for iPad use. */
+.roleTabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.roleTabs button{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid #c9d6cd;background:#fff;cursor:pointer;font-size:16px}
+.roleTabs button.active,.roleTabs button[aria-selected="true"]{background:#225c49;color:#fff;border-color:#225c49}
+.formGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:14px}
+.formGrid label,.formGrid>div{display:flex;flex-direction:column;gap:6px;font-size:16px}
+.formGrid input,.formGrid select{min-height:44px;font-size:16px;padding:8px 10px;border:1px solid #b9c7bf;border-radius:8px;background:#fff;max-width:100%}
+.masterCard{margin-bottom:12px}
+.fileButton{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid #225c49;border-radius:8px;color:#225c49;cursor:pointer;background:#fff;font-size:16px}
+.fileButton input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.issueList{max-height:340px;overflow:auto;border:1px solid #e4ddd2;border-radius:8px;margin-top:8px;background:#fff}
+.issueList table{width:100%;border-collapse:collapse;font-size:15px}
+.issueList th,.issueList td{padding:8px 10px;border-bottom:1px solid #eee;text-align:left;vertical-align:top}
+.adminActions{margin-top:16px}
+.logoutRow{margin-top:24px;text-align:right}
+.imageField{grid-column:1/-1;display:flex;flex-direction:column;gap:8px;font-size:16px}
+.shopImage{width:180px;height:120px;object-fit:cover;border-radius:10px;border:1px solid #d7d0c4;background:#f5f1ea}
+.shopImage.placeholder{display:flex;align-items:center;justify-content:center;color:#6b6f66}
+@media (max-width:700px){.formGrid{grid-template-columns:1fr}}

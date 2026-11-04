@@ -2,5 +2,5 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
   "outputDirectory": ".next",
-  "git": {"deploymentEnabled": {"*": false, "sample-ordering-g1-20261030": true}}
+  "git": {"deploymentEnabled": {"*": false, "sample-ordering-g1-20261030": true, "feature/ordering-admin-v0.2": true}}
 }
